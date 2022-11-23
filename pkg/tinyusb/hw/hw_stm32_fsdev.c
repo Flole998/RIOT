@@ -27,10 +27,12 @@
 
 static int tinyusb_hw_init_dev(const stm32_usbdev_fs_config_t *conf)
 {
+#if MODULE_PM_LAYERED
     /* Block both STOP and STANDBY, TODO STOP is unblocked during USB suspend
      * status */
     pm_block(STM32_PM_STOP);
     pm_block(STM32_PM_STANDBY);
+#endif
 
     /* Enable the clock to the peripheral */
     periph_clk_en(conf->apb, conf->rcc_mask);
