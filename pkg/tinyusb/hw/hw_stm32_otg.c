@@ -27,10 +27,12 @@
 
 static int tinyusb_hw_init_dev(const dwc2_usb_otg_fshs_config_t *conf)
 {
+#if MODULE_PM_LAYERED
     /* Block both STOP and STANDBY, TODO STOP is unblocked during USB suspend
      * status */
     pm_block(STM32_PM_STOP);
     pm_block(STM32_PM_STANDBY);
+#endif
 
 #if defined(PWR_CR2_USV) /* on L4 */
     /* Validate USB Supply */

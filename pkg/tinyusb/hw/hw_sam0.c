@@ -48,7 +48,9 @@ int tinyusb_hw_init(void)
     GCLK->CLKCTRL.reg = GCLK_CLKCTRL_CLKEN
                         | GCLK_CLKCTRL_GEN(sam_usbdev_config[0].gclk_src)
                         | GCLK_CLKCTRL_ID(USB_GCLK_ID);
+#if MODULE_PM_LAYERED
     pm_block(SAMD21_PM_IDLE_1);
+#endif /* MODULE_PM_LAYERED */
 #else
     GCLK->PCHCTRL[USB_GCLK_ID].reg = GCLK_PCHCTRL_CHEN
                                    | GCLK_PCHCTRL_GEN(sam_usbdev_config[0].gclk_src);
